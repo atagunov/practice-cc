@@ -138,19 +138,20 @@ namespace util::str_split {
         View _subview;
     public:
         /**
-         * Been a big debate: View&& or View
+         * Been a big question what to take here:
          *
-         * View classes from standard library typically take View
-         * apparenlty because views are generally cheap to copy
-         * and probably also because the compilers are so good at eliding copies
-         * of prvalues these days
+         * View&&? const View&? View?
+         * Two constructors, one for View& and one for View&&?
+         * 
+         * View classes from standard library typically take View by value probably becuse
+         * - views are cheap to move and we only move here, we do not copy
+         * - compilers are exceptionally good at eliding constructor invocations for prvalues
          *
-         * owning_view is kind of an exception, but a prvalue + compiler optimizations
-         * solve the issue - it still doesn't get copied - most of the time likely
+         * Let's follow the example set by standard library and take by value
+         * may revisit later; interesting question why standard library writers made this choice
          *
-         * It'd probably take an explicit instantiation of an owning_view as an lvalue to force a copy
-         *
-         * Taking by value enables passing lvalue view here if so desired
+         * Also of note that we're relying on dedeuction guide which ensures that View is usually
+         * one of ref_view<UnderlyingRange> or owning_view<UnderlyingRange>
          */
         constexpr LinesSplitView(View v): _subview(std::move(v)) {};
         constexpr auto begin() const {

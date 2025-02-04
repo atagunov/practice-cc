@@ -7,9 +7,12 @@ class UnoRecipe(ConanFile):
     options = {"shared" : [True, False]}
     default_options = {"shared" : True}
 
+    # taking latest folly avaialble
+    # not specifying versions of boost and fmt as folly will force it's own versions
     def requirements(self):
         self.requires("folly/[]")
         self.requires("boost/[]")
+        self.requires("fmt/[]")
         self.requires("gtest/[^1]")
 
     def layout(self):
