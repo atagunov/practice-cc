@@ -111,7 +111,8 @@ void doTestSimpleException(std::string result) {
 
     /* using simple char* literals, they're ok for starts_with */
     EXPECT_TRUE(lines[1].starts_with("\t@ a_a()") || lines[1].starts_with("\t@ 0x"))
-            << " but it is " << lines[1];    EXPECT_TRUE(lines[2].starts_with("\t@ a_b()") || lines[2].starts_with("\t@ 0x"))
+            << " but it is " << lines[1];
+    EXPECT_TRUE(lines[2].starts_with("\t@ a_b()") || lines[2].starts_with("\t@ 0x"))
             << " but it is " << lines[2];
     EXPECT_TRUE(lines[3].starts_with("\t@ a_c()") || lines[3].starts_with("\t@ 0x"))
             << " but it is " << lines[3];
