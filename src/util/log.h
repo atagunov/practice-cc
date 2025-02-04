@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <fmt/core.h>
+#include <fmt/ostream.h>
 
 #include <boost/log/attributes.hpp>
 #include <boost/log/sinks.hpp>

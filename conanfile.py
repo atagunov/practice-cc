@@ -10,9 +10,9 @@ class UnoRecipe(ConanFile):
     # taking latest folly avaialble
     # not specifying versions of boost and fmt as folly will force it's own versions
     def requirements(self):
+        self.requires("fmt/[~11]", override=True)
+        self.requires("boost/[]", override=True)
         self.requires("folly/[]")
-        self.requires("boost/[]")
-        self.requires("fmt/[]")
         self.requires("gtest/[^1]")
 
     def layout(self):

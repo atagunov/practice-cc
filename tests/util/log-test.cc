@@ -3,12 +3,14 @@
 #include <gtest/gtest.h>
 
 #include <iostream>
-#include <fmt/core.h>
 #include <exception>
 #include <future>
 
 #include <boost/log/sinks.hpp>
 #include <boost/config.hpp>
+
+#include <fmt/std.h>
+#include <fmt/ranges.h>
 
 namespace sinks=boost::log::sinks;
 namespace logging=boost::log;
@@ -58,8 +60,8 @@ auto splitToVec(const std::string& str) {
 TEST_F(LogTests, basicLoggingWorks) {
     auto& logger = util::log::getLogger<test>();
     logger.info("This is a test message with an int {} and a float {}", 42, 42.0f);
-    logger.error("This is an error, some info: [{}]", std::array<int, 2>{17, 45});
-    /* logger.debug("here's some debug", std::logic_error("test"));
+    logger.error("This is an error, some info: {}", std::array<int, 2>{17, 45});
+    logger.debug("here's some debug", std::logic_error("test"));
     logger.warn("Here's a warning: {} != {}", std::pair(2, 4), 1'000'000'000'000'000'000L);
 
     std::string result{extractResult()}; // got to put into a local so that it doesn't get released before we're done with it
@@ -75,7 +77,7 @@ TEST_F(LogTests, basicLoggingWorks) {
     EXPECT_TRUE(lines[2].ends_with(" #DEBUG [test] here's some debug: std::logic_error(test)"sv))
             << "but it is " << lines[2];
     EXPECT_TRUE(lines[3].ends_with(" #WARN  [test] Here's a warning: (2, 4) != 1000000000000000000"sv))
-            << "but it is " << lines[3]; */
+            << "but it is " << lines[3];
 }
 
 namespace testexc {
@@ -109,8 +111,7 @@ void doTestSimpleException(std::string result) {
 
     /* using simple char* literals, they're ok for starts_with */
     EXPECT_TRUE(lines[1].starts_with("\t@ a_a()") || lines[1].starts_with("\t@ 0x"))
-            << " but it is " << lines[1];
-    EXPECT_TRUE(lines[2].starts_with("\t@ a_b()") || lines[2].starts_with("\t@ 0x"))
+            << " but it is " << lines[1];    EXPECT_TRUE(lines[2].starts_with("\t@ a_b()") || lines[2].starts_with("\t@ 0x"))
             << " but it is " << lines[2];
     EXPECT_TRUE(lines[3].starts_with("\t@ a_c()") || lines[3].starts_with("\t@ 0x"))
             << " but it is " << lines[3];
